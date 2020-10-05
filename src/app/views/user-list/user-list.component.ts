@@ -72,11 +72,17 @@ export class UserListComponent implements OnInit {
     return;
   }
 
-  save(): void {}
+  save(): void {
+    alert('Not currently supported.');
+  }
 
-  changePassword(): void {}
+  changePassword(): void {
+    alert('Not currently supported.');
+  }
 
-  setDisplayName(): void {}
+  setDisplayName(): void {
+    alert('Not currently supported.');
+  }
 
   logout(): void {
     this.users = [];
