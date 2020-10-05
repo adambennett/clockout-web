@@ -1,0 +1,50 @@
+<div class="user-table">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="user">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> User </th>
+      <td mat-cell *matCellDef="let element">
+        <div *ngIf="element.employee; else elseBlock">{{element.employee}}</div>
+        <ng-template #elseBlock>{{element.username}}</ng-template>
+
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="vacation">
+      <th mat-header-cell *matHeaderCellDef> Vacation </th>
+      <td mat-cell *matCellDef="let element">
+        <button class="btn btn-raised btn-info color-btn">{{element.time.vacation}}</button>
+        <button (click)="addHours(element.employee, 'vacation')" style="height: 50%; margin-left: 15pt" class="addBtn btn btn-raised btn-primary color-btn">+</button>
+        <button (click)="subHours(element.employee, 'vacation')" style="height: 50%; margin-left: 5pt" class="subBtn btn btn-raised btn-primary color-btn">-</button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="personal">
+      <th mat-header-cell *matHeaderCellDef> Personal </th>
+      <td mat-cell *matCellDef="let element">
+        <button class="btn btn-raised btn-info color-btn">{{element.time.personal}}</button>
+        <button (click)="addHours(element.employee, 'personal')" style="height: 50%; margin-left: 15pt" class="addBtn btn btn-raised btn-primary color-btn">+</button>
+        <button (click)="subHours(element.employee, 'personal')" style="height: 50%; margin-left: 5pt" class="subBtn btn btn-raised btn-primary color-btn">-</button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="floating">
+      <th mat-header-cell *matHeaderCellDef> Floating </th>
+      <td mat-cell *matCellDef="let element">
+        <button class="btn btn-raised btn-info color-btn">{{element.time.floating}}</button>
+        <button (click)="addHours(element.employee, 'floating')" style="height: 50%; margin-left: 15pt" class="addBtn btn btn-raised btn-primary color-btn">+</button>
+        <button (click)="subHours(element.employee, 'floating')" style="height: 50%; margin-left: 5pt" class="subBtn btn btn-raised btn-primary color-btn">-</button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+<br>
+<button (click)="save()" style="margin: 10pt" class="btn btn-raised btn-primary color-btn">Save Changes</button>
+<button (click)="reset()" style="margin: 10pt" class="btn btn-raised btn-primary color-btn">Reset</button>
+<button (click)="logout()" style="margin: 10pt" class="btn btn-raised btn-danger color-btn">Logout</button>
+
+<br><br>
+<button (click)="changePassword()" style="margin: 10pt" class="btn btn-raised btn-info color-btn">Change Password</button>
+<button (click)="setDisplayName()" style="margin: 10pt" class="btn btn-raised btn-info color-btn">Set Display Name</button>
+
+<br><br>
+<button (click)="goToUrl('https://github.com/adambennett/StS-DuelistMod', true)" style="margin: 10pt" class="btn btn-raised btn-dark color-btn">Source Code - Server</button>
+<button (click)="goToUrl('https://github.com/adambennett/StS-DuelistMod', true)" style="margin: 10pt" class="btn btn-raised btn-dark color-btn">Source Code - Site</button>

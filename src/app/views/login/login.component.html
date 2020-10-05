@@ -1,0 +1,17 @@
+<div id="login-panel" class="mat-elevation-z10">
+  <div id="errors">
+    <mat-label id="error-text">Invalid credentials!</mat-label>
+  </div>
+  <div id="info">
+    <div id="username-input">
+      <mat-label id="username-label">Username: </mat-label><input type="text" id="username">
+    </div>
+    <div id="password-input">
+      <mat-label id="pass-label">Password: </mat-label><input type="password" id="password">
+    </div>
+  </div>
+  <div id="options">
+    <button (click)="login()" class="btn btn-raised btn-primary color-btn" id="login-button">Login</button>
+    <button (click)="createAccount()" class="btn btn-raised btn-primary color-btn" id="create-button">Create New Account</button>
+  </div>
+</div>
