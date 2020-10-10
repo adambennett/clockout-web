@@ -1,13 +1,19 @@
-<div id="login-panel" class="mat-elevation-z10">
+<div id="logo-panel">
+  <img src="assets/logo.png" alt="CSols Logo">
+</div>
+<div id="header-panel">
+  PTO Tracker
+</div>
+<div  id="login-panel" class="mat-elevation-z10">
   <div id="errors">
     <mat-label id="error-text">Invalid credentials!</mat-label>
   </div>
   <div id="info">
     <div id="username-input">
-      <mat-label id="username-label">Username: </mat-label><input type="text" id="username">
+      <mat-label id="username-label">Username: </mat-label><input (keyup.enter)="login()" type="text" id="username">
     </div>
     <div id="password-input">
-      <mat-label id="pass-label">Password: </mat-label><input type="password" id="password">
+      <mat-label id="pass-label">Password: </mat-label><input (keyup.enter)="login()"  type="password" id="password">
     </div>
   </div>
   <div id="options">

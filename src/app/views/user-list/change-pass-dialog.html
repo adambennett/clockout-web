@@ -1,0 +1,18 @@
+<div mat-dialog-content>
+  <p>Current Password: </p>
+  <mat-form-field>
+    <input type="password"  matInput [(ngModel)]="newPassUser.current">
+  </mat-form-field>
+  <p>New Password: </p>
+  <mat-form-field>
+    <input type="password" matInput [(ngModel)]="newPassUser.newPass">
+  </mat-form-field>
+  <p>Re-enter New Password: </p>
+  <mat-form-field>
+    <input type="password"  matInput [(ngModel)]="newPassUser.newPass2">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="newPassUser" cdkFocusInitial>Ok</button>
+</div>

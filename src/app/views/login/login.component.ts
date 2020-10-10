@@ -32,6 +32,10 @@ export class LoginComponent implements OnInit {
   getLoginInfo(newAcc: boolean): any {
     const username = $('#username').val();
     const password = $('#password').val();
+    if (username === '') {
+      this.error('Username cannot be blank!');
+      return;
+    }
     if (newAcc) {
       const salt = bcrypt.genSaltSync(10);
       const hashPass = bcrypt.hashSync(password, salt);
@@ -64,7 +68,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     const info = this.getLoginInfo(false);
-    this.connector.getUser(info.user).subscribe(data => {
+    this.connector.getUser(encodeURIComponent(info.user)).subscribe(data => {
       this.user = data;
       if (this.user && this.user.salt) {
         const hashPass = bcrypt.hashSync(info.pass, this.user.salt);
@@ -75,7 +79,10 @@ export class LoginComponent implements OnInit {
           return;
         }
       }
-      this.error(null);
+      this.error('Invalid credentials!');
+    }, error => {
+      this.error('Bad credential request!');
+      console.error(error);
     });
   }
 

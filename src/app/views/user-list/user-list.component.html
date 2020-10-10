@@ -1,72 +1,86 @@
-<div *ngIf="showingDays; else elseBlock">
-  <button (click)="switchView()" style="margin: 10pt" class="btn btn-raised btn-primary color-btn">Show Hours</button>
+<div class="page-content">
+  <div class="user-table mat-elevation-z16">
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="user">
+        <th mat-header-cell *matHeaderCellDef class="table-header"> User </th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="element.employee; else elseBlock" class="user-name">{{element.employee}}</div>
+          <ng-template #elseBlock class="user-name">{{element.username}}</ng-template>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="vacation">
+        <th mat-header-cell *matHeaderCellDef class="table-header"> Vacation<span class="timeType">{{timeType}}</span></th>
+        <td mat-cell *matCellDef="let element">
+        <span *ngIf="showingDays; else elseBlock">
+          <button (click)="modifyTimeDirectly('vacation')" class="btn btn-raised btn-info time-btn">{{dayTimeInfo[0]}}</button>
+        </span>
+          <ng-template #elseBlock>
+            <button (click)="modifyTimeDirectly('vacation')" class="btn btn-raised btn-info time-btn">{{element.time.vacation}}</button>
+          </ng-template>
+          <button (click)="addHours(element.employee, 'vacation')" style="height: 50%; margin-left: 15pt" class="addBtn btn btn-raised btn-primary color-btn">+</button>
+          <button  [disabled]="this.users[0].time.vacation <= 0" (click)="subHours(element.employee, 'vacation')" style="height: 50%; margin-left: 5pt" class="subBtn btn btn-raised btn-primary color-btn">-</button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="personal">
+        <th mat-header-cell *matHeaderCellDef class="table-header"> Personal<span class="timeType">{{timeType}}</span></th>
+        <td mat-cell *matCellDef="let element">
+        <span *ngIf="showingDays; else elseBlock">
+          <button (click)="modifyTimeDirectly('personal')" class="btn btn-raised btn-info time-btn">{{dayTimeInfo[1]}}</button>
+        </span>
+          <ng-template #elseBlock>
+            <button (click)="modifyTimeDirectly('personal')" class="btn btn-raised btn-info time-btn">{{element.time.personal}}</button>
+          </ng-template>
+          <button (click)="addHours(element.employee, 'personal')" style="height: 50%; margin-left: 15pt" class="addBtn btn btn-raised btn-primary color-btn">+</button>
+          <button [disabled]="this.users[0].time.personal <= 0" (click)="subHours(element.employee, 'personal')" style="height: 50%; margin-left: 5pt" class="subBtn btn btn-raised btn-primary color-btn">-</button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="floating">
+        <th mat-header-cell *matHeaderCellDef class="table-header"> Floating<span class="timeType">{{timeType}}</span></th>
+        <td mat-cell *matCellDef="let element">
+        <span *ngIf="showingDays; else elseBlock">
+          <button (click)="modifyTimeDirectly('floating')" class="btn btn-raised btn-info time-btn">{{dayTimeInfo[2]}}</button>
+        </span>
+          <ng-template #elseBlock>
+            <button (click)="modifyTimeDirectly('floating')" class="btn btn-raised btn-info time-btn">{{element.time.floating}}</button>
+          </ng-template>
+          <button (click)="addHours(element.employee, 'floating')" style="height: 50%; margin-left: 15pt" class="addBtn btn btn-raised btn-primary color-btn">+</button>
+          <button [disabled]="this.users[0].time.floating <= 0" (click)="subHours(element.employee, 'floating')" style="height: 50%; margin-left: 5pt" class="subBtn btn btn-raised btn-primary color-btn">-</button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef class="table-header">Total<span class="timeType">{{timeType}}</span></th>
+        <td mat-cell *matCellDef="let element">
+          <span *ngIf="showingDays; else elseBlock">
+          <mat-label>{{dayTimeInfo[0] + dayTimeInfo[1] + dayTimeInfo[2]}}</mat-label>
+        </span>
+          <ng-template #elseBlock>
+            <mat-label>{{element.time.vacation + element.time.personal + element.time.floating}}</mat-label>
+          </ng-template>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="buttons">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element; index as i">
+          <mat-icon-button title="Save user time information to the database" style="margin: 5pt;" (click)="save(users[0])"><img src="assets/icons/save.png" alt="Save user icon"></mat-icon-button>
+          <mat-icon-button title="Refresh user information to match the database" style="margin: 5pt;" (click)="reset(true)"><img src="assets/icons/refresh.png" alt="Refresh data icon"></mat-icon-button>
+          <mat-icon-button title="Switch the view between days and hours" style="margin: 5pt;" (click)="switchView()">
+            <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-calendar-range" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+              <path d="M9 7a1 1 0 0 1 1-1h5v2h-5a1 1 0 0 1-1-1zM1 9h4a1 1 0 0 1 0 2H1V9z"/>
+            </svg>
+          </mat-icon-button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <div class="user-functions ">
+    <button (click)="changePassword()" style="margin: 10pt" class="mat-elevation-z12 btn btn-raised btn-info time-btn">Change Password</button>
+    <button (click)="setDisplayName()" style="margin: 10pt" class="mat-elevation-z12 btn btn-raised btn-info time-btn">Set Display Name</button>
+    <button (click)="logout()" style="margin: 10pt" class="mat-elevation-z12 btn btn-raised btn-danger color-btn">Logout</button>
+    <br>
+    <button (click)="goToUrl('https://github.com/adambennett/clockout', true)" style="margin: 10pt" class="mat-elevation-z12 btn btn-raised btn-dark color-btn">Source Code - Server</button>
+    <button (click)="goToUrl('https://github.com/adambennett/clockout-web', true)" style="margin: 10pt" class="mat-elevation-z12 btn btn-raised btn-dark color-btn">Source Code - Site</button>
+  </div>
 </div>
-<ng-template #elseBlock>
-  <button (click)="switchView()" style="margin: 10pt" class="btn btn-raised btn-primary color-btn">Show Days</button>
-</ng-template>
-
-<div class="user-table">
-  <table mat-table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="user">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> User </th>
-      <td mat-cell *matCellDef="let element">
-        <div *ngIf="element.employee; else elseBlock">{{element.employee}}</div>
-        <ng-template #elseBlock>{{element.username}}</ng-template>
-
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="vacation">
-      <th mat-header-cell *matHeaderCellDef> Vacation </th>
-      <td mat-cell *matCellDef="let element">
-        <span *ngIf="showingDays; else elseBlock">
-          <button class="btn btn-raised btn-info color-btn">{{dayTimeInfo[0]}}</button>
-        </span>
-        <ng-template #elseBlock>
-          <button class="btn btn-raised btn-info color-btn">{{element.time.vacation}}</button>
-        </ng-template>
-        <button (click)="addHours(element.employee, 'vacation')" style="height: 50%; margin-left: 15pt" class="addBtn btn btn-raised btn-primary color-btn">+</button>
-        <button (click)="subHours(element.employee, 'vacation')" style="height: 50%; margin-left: 5pt" class="subBtn btn btn-raised btn-primary color-btn">-</button>
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="personal">
-      <th mat-header-cell *matHeaderCellDef> Personal </th>
-      <td mat-cell *matCellDef="let element">
-        <span *ngIf="showingDays; else elseBlock">
-          <button class="btn btn-raised btn-info color-btn">{{dayTimeInfo[1]}}</button>
-        </span>
-        <ng-template #elseBlock>
-          <button class="btn btn-raised btn-info color-btn">{{element.time.personal}}</button>
-        </ng-template>
-        <button (click)="addHours(element.employee, 'personal')" style="height: 50%; margin-left: 15pt" class="addBtn btn btn-raised btn-primary color-btn">+</button>
-        <button (click)="subHours(element.employee, 'personal')" style="height: 50%; margin-left: 5pt" class="subBtn btn btn-raised btn-primary color-btn">-</button>
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="floating">
-      <th mat-header-cell *matHeaderCellDef> Floating </th>
-      <td mat-cell *matCellDef="let element">
-        <span *ngIf="showingDays; else elseBlock">
-          <button class="btn btn-raised btn-info color-btn">{{dayTimeInfo[2]}}</button>
-        </span>
-        <ng-template #elseBlock>
-          <button class="btn btn-raised btn-info color-btn">{{element.time.floating}}</button>
-        </ng-template>
-        <button (click)="addHours(element.employee, 'floating')" style="height: 50%; margin-left: 15pt" class="addBtn btn btn-raised btn-primary color-btn">+</button>
-        <button (click)="subHours(element.employee, 'floating')" style="height: 50%; margin-left: 5pt" class="subBtn btn btn-raised btn-primary color-btn">-</button>
-      </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-</div>
-<br>
-<button (click)="save(users[0])" style="margin: 10pt" class="btn btn-raised btn-primary color-btn">Save Changes</button>
-<button (click)="reset()" style="margin: 10pt" class="btn btn-raised btn-primary color-btn">Reset</button>
-<button (click)="logout()" style="margin: 10pt" class="btn btn-raised btn-danger color-btn">Logout</button>
-
-<br><br>
-<button (click)="changePassword()" style="margin: 10pt" class="btn btn-raised btn-info color-btn">Change Password</button>
-<button (click)="setDisplayName()" style="margin: 10pt" class="btn btn-raised btn-info color-btn">Set Display Name</button>
-
-<br><br>
-<button (click)="goToUrl('https://github.com/adambennett/clockout', true)" style="margin: 10pt" class="btn btn-raised btn-dark color-btn">Source Code - Server</button>
-<button (click)="goToUrl('https://github.com/adambennett/clockout-web', true)" style="margin: 10pt" class="btn btn-raised btn-dark color-btn">Source Code - Site</button>
