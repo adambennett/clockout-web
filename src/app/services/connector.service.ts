@@ -24,4 +24,16 @@ export class ConnectorService {
   getUsers(): Observable<HttpResponse<User[]>> {
     return this.http.get<User[]>(this.API + 'getUsers', {observe: 'response'});
   }
+
+  updateUserTime(user: User): Observable<HttpResponse<User>> {
+    return this.http.post<any>(this.API + 'updateUserTime', user, {});
+  }
+
+  changePassword(user: User): Observable<HttpResponse<User>> {
+    return this.http.post<any>(this.API + 'changePassword', user, {});
+  }
+
+  changeDisplayName(username: string, newName: string): Observable<HttpResponse<User>> {
+    return this.http.post<any>(this.API + 'changeDisplayName/' + username + '/' + newName, null, {});
+  }
 }

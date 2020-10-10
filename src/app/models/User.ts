@@ -6,6 +6,5 @@ export interface User {
   username: string;
   pass: string;
   salt: string;
-  lastUpdated: string;
   employee: string;
 }

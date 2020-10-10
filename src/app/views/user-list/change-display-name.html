@@ -1,0 +1,20 @@
+<div mat-dialog-content>
+  <p>New Display Name: </p>
+  <mat-form-field>
+    <div *ngIf="newNameUser.name; else elseBlock">
+      <label>
+        <input matInput [(ngModel)]="newNameUser.name">
+      </label>
+    </div>
+    <ng-template #elseBlock>
+      <label>
+        <input matInput [(ngModel)]="newNameUser.name" [placeholder]="'Display name'">
+      </label>
+    </ng-template>
+
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="newNameUser" cdkFocusInitial>Ok</button>
+</div>
