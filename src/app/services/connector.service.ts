@@ -24,4 +24,8 @@ export class ConnectorService {
   getUsers(): Observable<HttpResponse<User[]>> {
     return this.http.get<User[]>(this.API + 'getUsers', {observe: 'response'});
   }
+
+  updateUserTime(user: User): Observable<HttpResponse<User>> {
+    return this.http.post<any>(this.API + 'updateUserTime', user, {});
+  }
 }

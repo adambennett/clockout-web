@@ -3,7 +3,6 @@ import {ConnectorService} from '../../services/connector.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../models/User';
 import {MatSort} from '@angular/material/sort';
-import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
@@ -14,9 +13,11 @@ import {MatTableDataSource} from '@angular/material/table';
 export class UserListComponent implements OnInit {
 
   users: User[] = [];
+  showingDays: boolean = false;
   displayedColumns: string[] = ['user', 'vacation', 'personal', 'floating'];
   dataSource: MatTableDataSource<User>;
   increment = 1;
+  dayTimeInfo: number[] = [];
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -36,12 +37,20 @@ export class UserListComponent implements OnInit {
     }
   }
 
+  calculateDayTimeInfo(): void {
+    this.dayTimeInfo = [];
+    this.dayTimeInfo.push(this.users[0].time.vacation / 8);
+    this.dayTimeInfo.push(this.users[0].time.personal / 8);
+    this.dayTimeInfo.push(this.users[0].time.floating / 8);
+  }
+
   addHours(employee: string, timeType: string): void {
     for (const user of this.users) {
       if (user.employee === employee) {
         user.time[timeType] += this.increment;
       }
     }
+    this.calculateDayTimeInfo();
   }
 
   subHours(employee: string, timeType: string): void {
@@ -50,6 +59,7 @@ export class UserListComponent implements OnInit {
         user.time[timeType] -= this.increment;
       }
     }
+    this.calculateDayTimeInfo();
   }
 
   reset(): void {
@@ -57,6 +67,7 @@ export class UserListComponent implements OnInit {
     if (sessionStorage.loggedIn == 'true') {
       const user = JSON.parse(sessionStorage.user);
       this.users.push(user);
+      this.calculateDayTimeInfo();
       this.dataSource = new MatTableDataSource<User>(this.users);
       this.dataSource.sort = this.sort;
     } else {
@@ -72,8 +83,20 @@ export class UserListComponent implements OnInit {
     return;
   }
 
-  save(): void {
-    alert('Not currently supported.');
+  switchView() {
+    this.showingDays = !this.showingDays;
+    this.increment = this.showingDays ? 4 : 1;
+  }
+
+  save(user: User): void {
+    this.connector.updateUserTime(user).subscribe(data => {
+      alert('Time information updated successfully.');
+      sessionStorage.user = JSON.stringify(data);
+      this.reset();
+    }, error => {
+      alert('Error updating your time info!');
+      console.error(error);
+    });
   }
 
   changePassword(): void {

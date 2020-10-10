@@ -1,3 +1,10 @@
+<div *ngIf="showingDays; else elseBlock">
+  <button (click)="switchView()" style="margin: 10pt" class="btn btn-raised btn-primary color-btn">Show Hours</button>
+</div>
+<ng-template #elseBlock>
+  <button (click)="switchView()" style="margin: 10pt" class="btn btn-raised btn-primary color-btn">Show Days</button>
+</ng-template>
+
 <div class="user-table">
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="user">
@@ -11,7 +18,12 @@
     <ng-container matColumnDef="vacation">
       <th mat-header-cell *matHeaderCellDef> Vacation </th>
       <td mat-cell *matCellDef="let element">
-        <button class="btn btn-raised btn-info color-btn">{{element.time.vacation}}</button>
+        <span *ngIf="showingDays; else elseBlock">
+          <button class="btn btn-raised btn-info color-btn">{{dayTimeInfo[0]}}</button>
+        </span>
+        <ng-template #elseBlock>
+          <button class="btn btn-raised btn-info color-btn">{{element.time.vacation}}</button>
+        </ng-template>
         <button (click)="addHours(element.employee, 'vacation')" style="height: 50%; margin-left: 15pt" class="addBtn btn btn-raised btn-primary color-btn">+</button>
         <button (click)="subHours(element.employee, 'vacation')" style="height: 50%; margin-left: 5pt" class="subBtn btn btn-raised btn-primary color-btn">-</button>
       </td>
@@ -19,7 +31,12 @@
     <ng-container matColumnDef="personal">
       <th mat-header-cell *matHeaderCellDef> Personal </th>
       <td mat-cell *matCellDef="let element">
-        <button class="btn btn-raised btn-info color-btn">{{element.time.personal}}</button>
+        <span *ngIf="showingDays; else elseBlock">
+          <button class="btn btn-raised btn-info color-btn">{{dayTimeInfo[1]}}</button>
+        </span>
+        <ng-template #elseBlock>
+          <button class="btn btn-raised btn-info color-btn">{{element.time.personal}}</button>
+        </ng-template>
         <button (click)="addHours(element.employee, 'personal')" style="height: 50%; margin-left: 15pt" class="addBtn btn btn-raised btn-primary color-btn">+</button>
         <button (click)="subHours(element.employee, 'personal')" style="height: 50%; margin-left: 5pt" class="subBtn btn btn-raised btn-primary color-btn">-</button>
       </td>
@@ -27,7 +44,12 @@
     <ng-container matColumnDef="floating">
       <th mat-header-cell *matHeaderCellDef> Floating </th>
       <td mat-cell *matCellDef="let element">
-        <button class="btn btn-raised btn-info color-btn">{{element.time.floating}}</button>
+        <span *ngIf="showingDays; else elseBlock">
+          <button class="btn btn-raised btn-info color-btn">{{dayTimeInfo[2]}}</button>
+        </span>
+        <ng-template #elseBlock>
+          <button class="btn btn-raised btn-info color-btn">{{element.time.floating}}</button>
+        </ng-template>
         <button (click)="addHours(element.employee, 'floating')" style="height: 50%; margin-left: 15pt" class="addBtn btn btn-raised btn-primary color-btn">+</button>
         <button (click)="subHours(element.employee, 'floating')" style="height: 50%; margin-left: 5pt" class="subBtn btn btn-raised btn-primary color-btn">-</button>
       </td>
@@ -37,7 +59,7 @@
   </table>
 </div>
 <br>
-<button (click)="save()" style="margin: 10pt" class="btn btn-raised btn-primary color-btn">Save Changes</button>
+<button (click)="save(users[0])" style="margin: 10pt" class="btn btn-raised btn-primary color-btn">Save Changes</button>
 <button (click)="reset()" style="margin: 10pt" class="btn btn-raised btn-primary color-btn">Reset</button>
 <button (click)="logout()" style="margin: 10pt" class="btn btn-raised btn-danger color-btn">Logout</button>
 

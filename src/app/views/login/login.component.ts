@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import * as bcrypt from 'bcryptjs';
 import {ConnectorService} from '../../services/connector.service';
 import {User} from '../../models/User';
-import {VacationTime} from '../../models/VacationTime';
 
 @Component({
   selector: 'app-login',
@@ -23,9 +22,10 @@ export class LoginComponent implements OnInit {
   }
 
   error(message: string): void {
-    $('#error-text').show();
+    const element = $('#error-text');
+    element.show();
     if (message) {
-      $('#error-text').text(message);
+      element.text(message);
     }
   }
 
@@ -49,7 +49,6 @@ export class LoginComponent implements OnInit {
       username: info.user,
       pass: info.pass,
       salt: info.salt,
-      lastUpdated: ' ',
       employee: ' '
     }
     this.connector.createUser(newUser).subscribe((data) => {
