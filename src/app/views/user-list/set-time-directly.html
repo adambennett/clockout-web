@@ -1,0 +1,15 @@
+<div mat-dialog-content>
+  <div *ngIf="showingDays; else elseBlock">
+    <p>{{timeType}} Time (days): </p>
+  </div>
+  <ng-template #elseBlock>
+    <p>{{timeType}} Time (hours): </p>
+  </ng-template>
+  <mat-form-field>
+    <input matInput [(ngModel)]="newTime[timeProp]">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="newTime" cdkFocusInitial>Save</button>
+</div>

@@ -3,7 +3,13 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {ChangeDisplayNameDialog, ChangePassDialog, UserListComponent} from './views/user-list/user-list.component';
+import {
+  ChangeDisplayNameDialog,
+  ChangePassDialog,
+  SetAllTimeDialog,
+  SetTimeDialog,
+  UserListComponent
+} from './views/user-list/user-list.component';
 import {ConnectorService} from './services/connector.service';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
@@ -24,7 +30,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     UserListComponent,
     LoginComponent,
     ChangePassDialog,
-    ChangeDisplayNameDialog
+    ChangeDisplayNameDialog,
+    SetTimeDialog,
+    SetAllTimeDialog
   ],
   imports: [
     BrowserModule,
