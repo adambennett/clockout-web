@@ -1,0 +1,18 @@
+<div mat-dialog-content>
+  <p>Vacation Time {{timeType}}: </p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="user.time.vacation">
+  </mat-form-field>
+  <p>Personal Time {{timeType}}: </p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="user.time.personal">
+  </mat-form-field>
+  <p>Floating Time {{timeType}}: </p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="user.time.floating">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="user" cdkFocusInitial>Save</button>
+</div>

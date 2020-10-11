@@ -49,18 +49,24 @@
       </ng-container>
       <ng-container matColumnDef="total">
         <th mat-header-cell *matHeaderCellDef class="table-header">Total<span class="timeType">{{timeType}}</span></th>
-        <td mat-cell *matCellDef="let element">
+        <td mat-cell *matCellDef="let element" >
           <span *ngIf="showingDays; else elseBlock">
-          <mat-label>{{dayTimeInfo[0] + dayTimeInfo[1] + dayTimeInfo[2]}}</mat-label>
+          <mat-label class="totalTime">{{dayTimeInfo[0] + dayTimeInfo[1] + dayTimeInfo[2]}}</mat-label>
         </span>
           <ng-template #elseBlock>
-            <mat-label>{{element.time.vacation + element.time.personal + element.time.floating}}</mat-label>
+            <mat-label class="totalTime">{{element.time.vacation + element.time.personal + element.time.floating}}</mat-label>
           </ng-template>
         </td>
       </ng-container>
       <ng-container matColumnDef="buttons">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element; index as i">
+          <mat-icon-button title="Edit all three time categories at once" (click)="modifyAllTimeDirectly()" style="margin: 5pt;">
+            <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+            </svg>
+          </mat-icon-button>
           <mat-icon-button title="Save user time information to the database" style="margin: 5pt;" (click)="save(users[0])"><img src="assets/icons/save.png" alt="Save user icon"></mat-icon-button>
           <mat-icon-button title="Refresh user information to match the database" style="margin: 5pt;" (click)="reset(true)"><img src="assets/icons/refresh.png" alt="Refresh data icon"></mat-icon-button>
           <mat-icon-button title="Switch the view between days and hours" style="margin: 5pt;" (click)="switchView()">
@@ -80,7 +86,7 @@
     <button (click)="setDisplayName()" style="margin: 10pt" class="mat-elevation-z12 btn btn-raised btn-info time-btn">Set Display Name</button>
     <button (click)="logout()" style="margin: 10pt" class="mat-elevation-z12 btn btn-raised btn-danger color-btn">Logout</button>
     <br>
-    <button (click)="goToUrl('https://github.com/adambennett/clockout', true)" style="margin: 10pt" class="mat-elevation-z12 btn btn-raised btn-dark color-btn">Source Code - Server</button>
-    <button (click)="goToUrl('https://github.com/adambennett/clockout-web', true)" style="margin: 10pt" class="mat-elevation-z12 btn btn-raised btn-dark color-btn">Source Code - Site</button>
+    <button title="https://github.com/adambennett/clockout" (click)="goToUrl('https://github.com/adambennett/clockout', true)" style="margin: 10pt" class="mat-elevation-z12 btn btn-raised btn-dark color-btn">Source Code - Server</button>
+    <button title="https://github.com/adambennett/clockout-web" (click)="goToUrl('https://github.com/adambennett/clockout-web', true)" style="margin: 10pt" class="mat-elevation-z12 btn btn-raised btn-dark color-btn">Source Code - Site</button>
   </div>
 </div>

@@ -18,3 +18,19 @@ html{
   min-height:100%;
   position:relative;
 }
+
+#login-panel {
+  background-image: url("assets/loginPanelBG.png");
+  background-color: #000000;
+}
+
+.login-input-box {
+  background-image: url("assets/loginPanelBG.png");
+  background-color: #575757;
+}
+
+.table-bg {
+  background-image: url("assets/tableBG.png");
+  background-color: #575757;
+  border-image: url("assets/tableBG.png");
+}

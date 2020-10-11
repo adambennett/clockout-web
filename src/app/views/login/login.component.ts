@@ -11,6 +11,7 @@ import {User} from '../../models/User';
 export class LoginComponent implements OnInit {
 
   user: User;
+  version: string = 'build: 1.0.0';
 
   constructor(private connector: ConnectorService) { }
 
